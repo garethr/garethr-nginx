@@ -9,7 +9,7 @@ describe 'nginx' do
       :kernelrelease   => '3.8.0-29-generic'
     }}
 
-    it { should include_class('nginx::params') }
+    it { should contain_class('nginx::params') }
 
     it { should contain_class('nginx::install').that_comes_before('nginx::config') }
     it { should contain_class('nginx::config') }
@@ -20,11 +20,13 @@ describe 'nginx' do
 
     describe 'with the stable repository' do
       let(:params) { {'repo' => 'stable' } }
+      it { should contain_class('apt') }
       it { should contain_apt__source('nginx').with_location('http://nginx.org/packages/ubuntu') }
     end
 
     describe 'with the mainline repository' do
       let(:params) { {'repo' => 'mainline' } }
+      it { should contain_class('apt') }
       it { should contain_apt__source('nginx').with_location('http://nginx.org/packages/mainline/ubuntu') }
     end
 
