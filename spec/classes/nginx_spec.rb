@@ -32,7 +32,7 @@ describe 'nginx' do
 
     describe 'with an invalid repository' do
       let(:params) { {'repo' => 'invalid' } }
-      it { expect { should }.to raise_error(Puppet::Error) }
+      it { expect { should contain_package('nginx') }.to raise_error(Puppet::Error) }
     end
 
   end
@@ -47,7 +47,7 @@ describe 'nginx' do
 
     describe 'with an invalid ensure value' do
       let(:params) { {'ensure' => 'custom' } }
-      it { expect { should }.to raise_error(Puppet::Error) }
+      it { expect { should contain_package('nginx') }.to raise_error(Puppet::Error) }
     end
 
     describe 'with an ensure absent' do
@@ -65,7 +65,7 @@ describe 'nginx' do
         :operatingsystem => 'Nexenta',
       }}
 
-      it { expect { should }.to raise_error(Puppet::Error, /This module only works on Debian or RedHat/) }
+      it { expect { should contain_package('nginx') }.to raise_error(Puppet::Error, /This module only works on Debian or RedHat/) }
     end
   end
 end
