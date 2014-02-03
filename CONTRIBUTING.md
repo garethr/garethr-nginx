@@ -24,6 +24,7 @@ will likely make it into a release a little quicker.
 The testing and development tools have a bunch of dependencies,
 all managed by [bundler](http://bundler.io/) according to the
 [Puppet support matrix](http://docs.puppetlabs.com/guides/platforms.html#ruby-versions).
+
 By default the tests use a baseline version of Puppet.
 
 If you have Ruby 2.x or want a specific version of Puppet,
@@ -34,10 +35,6 @@ you must set an environment variable such as:
 Install the dependencies like so...
 
     bundle install
-
-...or promote reuse of bundled gems across projects by running:
-
-    bundle install --path=~/.bundle
 
 ## Syntax and style
 
@@ -66,16 +63,21 @@ Note also you can run the syntax, style and unit tests in one go with:
 
 The unit tests just check the code runs, not that it does exactly what
 we want on a real machine. For that we're using
-[rspec-system-puppet](https://github.com/puppetlabs/rspec-system-puppet).
+[beaker](https://github.com/puppetlabs/beaker).
+
 This fires up a new virtual machine (using vagrant) and runs a series of
 simple tests against it after applying the module. You can run this
 with:
 
-    bundle exec rake spec:system
+    bundle exec rspec spec/acceptance
 
 This will run the tests on an Ubuntu 12.04 virtual machine. You can also
 run the integration tests against Centos 6.5 with.
 
-    RS_SET=centos-65-x64 bundle exec rake spec:system
+    RS_SET=centos-64-x64 bundle exec rspec test/acceptances
 
+If you don't want to have to recreate the virtual machine every time you
+can use `RS_DESTROY=no` and `RS_PROVISION=no`. On the first run you will
+at least need `RS_PROVISION` set to yes (the default). The Vagrantfile
+for the created virtual machines will be in `.vagrant/beaker_vagrant_fies`.
 
