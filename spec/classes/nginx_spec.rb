@@ -6,6 +6,7 @@ describe 'nginx' do
     let(:facts) {{
       :osfamily        => 'Debian',
       :lsbdistcodename => 'maverick',
+      :lsbdistid       => 'debian',
       :kernelrelease   => '3.8.0-29-generic'
     }}
 
